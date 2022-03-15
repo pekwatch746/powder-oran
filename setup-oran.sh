@@ -14,6 +14,23 @@ logtstart "oran"
 mkdir -p $OURDIR/oran
 cd $OURDIR/oran
 
+# one time setup for influxdb
+kubectl create ns ricinfra
+helm install stable/nfs-server-provisioner --namespace ricinfra --name nfs-release-1
+kubectl patch storageclass nfs -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+sudo apt install nfs-common
+
+# deploy E brance based on the latest instruction
+git clone https://gerrit.o-ran-sc.org/r/it/dep
+cd dep
+git submodule update --init --recursive --remote
+
+cat RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml | sed -e 's/10\.0\.0\.1//g' > RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml.overwrite
+
+cd bin
+./deploy-ric-platform ../RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml.overwrite
+
+exit 0
 # Login to o-ran docker registry server (both staging and release) so
 # that Dockerfile base images can be pulled.
 $SUDO docker login -u docker -p docker https://nexus3.o-ran-sc.org:10004
