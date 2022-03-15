@@ -28,7 +28,7 @@ git submodule update --init --recursive --remote
 cat RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml | sed -e 's/10\.0\.0\.1//g' > RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml.overwrite
 
 cd bin
-./deploy-ric-platform ../RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml.overwrite
+sudo ./deploy-ric-platform ../RECIPE_EXAMPLE/PLATFORM/example_recipe_oran_e_release.yaml.overwrite
 
 exit 0
 # Login to o-ran docker registry server (both staging and release) so
