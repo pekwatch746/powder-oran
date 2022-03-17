@@ -11,7 +11,7 @@ fi
 
 logtstart "oran"
 
-if [ $RICVERSION -eq $RICE-RELEASE ]; then
+if [ $RICVERSION -eq ${RICE_RELEASE} ]; then
     mkdir -p $OURDIR/oran
     cd $OURDIR/oran
     
