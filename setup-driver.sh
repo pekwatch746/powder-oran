@@ -7,14 +7,13 @@ cd $SRC
 . $SRC/setup-lib.sh
 
 ALLNODESCRIPTS="setup-ssh.sh setup-disk-space.sh"
-HEADNODESCRIPTS="setup-nfs-server.sh setup-nginx.sh setup-ssl.sh setup-kubespray.sh setup-kubernetes-extra.sh"
+HEADNODESCRIPTS="setup-nfs-server.sh setup-nginx.sh setup-ssl.sh"
 if [ $INSTALLORANSC -eq 1 ]; then
-    HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-oran.sh setup-xapp-kpimon.sh setup-xapp-nexran.sh"
+    HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-oran.sh"
 fi
 if [ $INSTALLONFSDRAN -eq 1 ]; then
     HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-sdran.sh"
 fi
-HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-ran.sh"
 HEADNODESCRIPTS="${HEADNODESCRIPTS} setup-end.sh"
 WORKERNODESCRIPTS="setup-nfs-client.sh"
 

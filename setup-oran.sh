@@ -11,9 +11,10 @@ fi
 
 logtstart "oran"
 
+mkdir -p $OURDIR/oran
+cd $OURDIR/oran
+
 if [ $RICVERSION -eq ${RICE_RELEASE} ]; then
-    mkdir -p $OURDIR/oran
-    cd $OURDIR/oran
     
     # one time setup for influxdb
     kubectl create ns ricinfra
@@ -36,6 +37,18 @@ if [ $RICVERSION -eq ${RICE_RELEASE} ]; then
     exit 0
 fi
 
+if [ $RICVERSION -eq ${RIC_LATEST} ]; then
+    # deploy from the ric-plt/ric-dep repo for the latest release
+    git clone "https://gerrit.o-ran-sc.org/r/ric-plt/ric-dep"
+    cd ric-dep
+    sudo ./bin/install_k8s_and_helm.sh 2>&1 | tee $OURDIR/oran/deploy.log
+    sudo ./bin/install_common_templates_to_helm.sh 2>&1 | tee $OURDIR/oran/deploy.log
+    cat RECIPE_EXAMPLE/example_recipe_latest_stable.yaml | sed -e 's/10\.0\.0\.1//g' > RECIPE_EXAMPLE/example_recipe_latest_stable.yaml.overwrite
+    sudo ./bin/install -f RECIPE_EXAMPLE/example_recipe_latest_stable.yaml.overwrite 2>&1 | tee $OURDIR/oran/deploy.log
+    logtend "oran"
+    touch $OURDIR/setup-oran-done
+    exit 0
+fi
 
 # Login to o-ran docker registry server (both staging and release) so
 # that Dockerfile base images can be pulled.

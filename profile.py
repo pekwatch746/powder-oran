@@ -48,8 +48,8 @@ pc.defineParameter(
     longDescription="A specific link speed to use for each link/LAN.  All experiment network interfaces will request this speed.")
 pc.defineParameter(
     "ricRelease","O-RAN SC RIC Release",
-    portal.ParameterType.STRING,"e-release",
-    [("cherry","cherry"),("dawn","dawn"),("e-release", "e-release")],
+    portal.ParameterType.STRING,"latest",
+    [("cherry","cherry"),("dawn","dawn"),("e-release", "e-release"),("latest", "latest")],
     longDescription="O-RAN SC RIC component version.  Even when you select a version, some components may be built from our own bugfix branches, and not specifically on the exact release branch.  This parameter specifies the default branch for components that we can use unmodified.")
 pc.defineParameter(
     "installORANSC","Install O-RAN SC RIC",
@@ -79,7 +79,7 @@ pc.defineParameter(
 pc.defineParameter(
     "diskImage","Disk Image",
     portal.ParameterType.IMAGE,
-    "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU18-64-STD",
+    "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU20-64-STD",
     advanced=True,
     longDescription="An image URN or URL that every node will run.")
 pc.defineParameter(
